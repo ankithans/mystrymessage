@@ -1,11 +1,7 @@
-import { signIn } from "@/app/api/auth/[...nextauth]/options";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import Link from "next/link";
+import React from "react";
 
 const SignIn = () => {
-	return <div></div>;
+	return <div>SignIn</div>;
 };
 
 export default SignIn;
