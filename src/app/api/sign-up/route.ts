@@ -3,8 +3,6 @@ import UserModel, { User } from "@/model/User";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 
-sendVerificationEmail;
-
 export async function POST(request: Request) {
 	await dbConnect();
 
@@ -63,7 +61,7 @@ export async function POST(request: Request) {
 			newUser.messages = [];
 
 			const newUser1 = new UserModel(newUser);
-			await newUser.save();
+			await newUser1.save();
 
 			// send verification email
 			const emailResponse = await sendVerificationEmail(
@@ -80,16 +78,15 @@ export async function POST(request: Request) {
 					{ status: 500 }
 				);
 			}
-
-			return Response.json(
-				{
-					success: true,
-					message:
-						"User registered successfully. Please verify your email",
-				},
-				{ status: 201 }
-			);
 		}
+		return Response.json(
+			{
+				success: true,
+				message:
+					"User registered successfully. Please verify your email",
+			},
+			{ status: 201 }
+		);
 	} catch (error) {
 		console.error("Error registering user", error);
 		return Response.json(
