@@ -1,10 +1,10 @@
-import { NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import brcypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 
-export const authOptions: NextAuthConfig = {
+export const { auth, handlers, signIn, signOut } = NextAuth({
 	providers: [
 		Credentials({
 			id: "credentials",
@@ -72,4 +72,4 @@ export const authOptions: NextAuthConfig = {
 			return session;
 		},
 	},
-};
+});
