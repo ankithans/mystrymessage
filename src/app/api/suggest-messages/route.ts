@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { StreamData, streamText } from "ai";
 import { createOpenAI as createGroq } from "@ai-sdk/openai";
 
 export async function POST(req: Request) {
@@ -11,12 +11,18 @@ export async function POST(req: Request) {
 			apiKey: process.env.GROQ_API_KEY,
 		});
 
+		const data = new StreamData();
+		data.append({ test: "value" });
+
 		const result = await streamText({
 			model: groq("llama-3.1-70b-versatile"),
 			prompt,
+			onFinish() {
+				data.close();
+			},
 		});
 
-		return result.toDataStreamResponse();
+		return result.toDataStreamResponse({ data });
 	} catch (error) {
 		if (error) console.error("An unexpected error occurred:", error);
 		throw error;
